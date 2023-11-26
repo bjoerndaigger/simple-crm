@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "simple-crm-daced": {
+      "hosting": {
+        "simple-crm": [
+          "simple-crm-daced"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "simple-crm-daced"
+  }
+}

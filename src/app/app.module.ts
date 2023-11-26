@@ -18,6 +18,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import { FormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    FormsModule
+    FormsModule,
+    MatProgressBarModule,
+    MatCardModule,
+    provideFirebaseApp(() => initializeApp({"projectId":"simple-crm-daced","appId":"1:605265573908:web:b4dfb062f77bde47accf01","storageBucket":"simple-crm-daced.appspot.com","apiKey":"AIzaSyBWrxcYrJLzAroN1tDMVtbgom2KZSguygs","authDomain":"simple-crm-daced.firebaseapp.com","messagingSenderId":"605265573908"})),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
