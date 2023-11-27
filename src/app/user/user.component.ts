@@ -18,12 +18,19 @@ export class UserComponent implements OnDestroy {
 
   constructor(public dialog: MatDialog) {
     this.unsubChanges = onSnapshot(collection(this.firestore, 'users'), (changes) => {
-      console.log('Received changes from DB: ', changes);
-      this.allUsers = changes.docs.map((doc) => doc.data());
-      console.log('All Users: ', this.allUsers);
+      changes.forEach((element) => {
+        const userDataWithId = {
+          id: element.id,
+          ...element.data()
+        };
+        this.allUsers.push(userDataWithId);
+        console.log(this.allUsers);
+      });
     });
   }
+  
 
+  
   ngOnDestroy() {
     if (this.unsubChanges) {
       this.unsubChanges();
