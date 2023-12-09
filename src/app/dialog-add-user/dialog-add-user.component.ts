@@ -12,7 +12,7 @@ export class DialogAddUserComponent {
   firestore: Firestore = inject(Firestore);
   user = new User();
   birthDate: Date = new Date();
-  loading = false;
+  loading: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {}
 

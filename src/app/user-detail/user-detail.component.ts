@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Firestore, doc, getDoc } from '@angular/fire/firestore';
+import { Firestore, Unsubscribe, doc, onSnapshot } from '@angular/fire/firestore';
 import { User } from 'src/models/user.class';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
@@ -16,6 +16,7 @@ export class UserDetailComponent {
   firestore: Firestore = inject(Firestore);
   userId = '';
   user: User = new User();
+  unsubChanges: Unsubscribe;
 
   constructor(private route: ActivatedRoute, public dialog: MatDialog) { }
 
@@ -25,25 +26,29 @@ export class UserDetailComponent {
     this.getUser(this.userId);
   }
 
-  async getUser(userId: string) {
-    try {
-      const userDoc = await getDoc(doc(this.firestore, 'users', userId));
-      console.log('User data:', userDoc.data());
+  getUser(userId: string) {
+    this.unsubChanges = onSnapshot(doc(this.firestore, 'users', userId), (userDoc) => {
+      console.log("Current data: ", userDoc.data());
       this.user = new User(userDoc.data());
-      console.log('User Object', this.user);
-    } catch (error) {
-      console.error('Error getting document:', error);
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.unsubChanges) {
+      this.unsubChanges();
     }
   }
 
   editUser() {
     const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.user = this.user;
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userId = this.userId;
   }
 
   editAddress() {
     const dialog = this.dialog.open(DialogEditAddressComponent);
-    dialog.componentInstance.user = this.user;
+    dialog.componentInstance.user = new User(this.user.toJSON());
+    dialog.componentInstance.userId = this.userId;
   };
 }
 

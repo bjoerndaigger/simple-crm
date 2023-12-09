@@ -18,8 +18,9 @@ export class UserComponent implements OnDestroy {
 
   constructor(public dialog: MatDialog) {
     this.unsubChanges = onSnapshot(collection(this.firestore, 'users'), (changes) => {
+      this.allUsers = []; // clears list before rendering again
       changes.forEach((element) => {
-        const userDataWithId = {
+        const userDataWithId = { // builds new object of both values
           id: element.id,
           ...element.data()
         };
@@ -28,8 +29,6 @@ export class UserComponent implements OnDestroy {
       });
     });
   }
-  
-
   
   ngOnDestroy() {
     if (this.unsubChanges) {

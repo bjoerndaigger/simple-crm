@@ -1,6 +1,10 @@
 mat-card-content {
   padding-left: 0;
   padding-right: 0;
+
+  &:last-child {
+    padding-bottom: 0;
+  }
 }
 
 .add-user-btn {
