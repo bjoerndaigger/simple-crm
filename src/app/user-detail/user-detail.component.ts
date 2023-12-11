@@ -22,13 +22,11 @@ export class UserDetailComponent {
 
   ngOnInit(): void {
     this.userId = this.route.snapshot.paramMap.get('id');
-    console.log('GOT ID', this.userId);
     this.getUser(this.userId);
   }
 
   getUser(userId: string) {
     this.unsubChanges = onSnapshot(doc(this.firestore, 'users', userId), (userDoc) => {
-      console.log("Current data: ", userDoc.data());
       this.user = new User(userDoc.data());
     });
   }

@@ -13,8 +13,15 @@ export class DialogAddUserComponent {
   user = new User();
   birthDate: Date = new Date();
   loading: boolean = false;
+  minDate: Date;
+  maxDate: Date;
 
-  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {}
+  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 100, 0, 1);
+    const today = new Date();
+    this.maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());    
+  } 
 
   async saveUser() {
     this.user.birthDate = this.birthDate.getTime();

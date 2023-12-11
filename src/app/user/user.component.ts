@@ -25,11 +25,12 @@ export class UserComponent implements OnDestroy {
           ...element.data()
         };
         this.allUsers.push(userDataWithId);
+        this.sortUsersByLastName();
         console.log(this.allUsers);
       });
     });
   }
-  
+
   ngOnDestroy() {
     if (this.unsubChanges) {
       this.unsubChanges();
@@ -38,6 +39,10 @@ export class UserComponent implements OnDestroy {
 
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
+  }
+
+  sortUsersByLastName() {
+    this.allUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 }
 
