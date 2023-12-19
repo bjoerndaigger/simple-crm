@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, onSnapshot, collection } from '@angular/fire/firestore';
+import { Subject } from 'rxjs';
 import { User } from 'src/models/user.class';
 
 @Injectable({
@@ -11,13 +12,13 @@ export class UserListService {
   unsubChanges;
 
   firestore: Firestore = inject(Firestore);
+  usersChange$ = new Subject(); // new observable
 
   constructor() {
-    this.getUser();
-    this.unsubChanges = this.getUser();
+    this.unsubChanges = this.getUserData();
   }
 
-  getUser() {
+  getUserData() {
     this.unsubChanges = onSnapshot(this.userCollection(), (list) => {
       this.allUsers = []; // clears list before rendering again
       list.forEach((element) => {
@@ -25,7 +26,8 @@ export class UserListService {
         userData['id'] = element.id;
         this.allUsers.push(userData);
       });
-      // this.sortUsersByLastName();
+      this.usersChange$.next(this.allUsers); // pass allUsers as an argument to my observable
+      this.sortUsersByLastName();
     });
   }
 
@@ -41,3 +43,4 @@ export class UserListService {
     this.allUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 }
+

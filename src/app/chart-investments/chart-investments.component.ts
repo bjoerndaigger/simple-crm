@@ -13,19 +13,17 @@ export class ChartInvestmentsComponent implements OnInit {
   constructor(public userListService: UserListService) { }
 
   ngOnInit(): void {
-    this.userListService.getUser();
-    this.getUsers();
+    this.userListService.usersChange$.subscribe(users => {  // subscribe to the observable in user list service, automatic call on changes
+      this.getUsers();
+    })
     this.createChart();
   }
 
   getUsers() {
-    console.log('Function works');
     const userData = this.userListService.allUsers;
     console.log(userData);
     
   }
-
-  
 
   createChart() {
 

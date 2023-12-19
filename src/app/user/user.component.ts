@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userListService.getUser();
+    this.userListService.getUserData();
   }
 
   openDialog() {
