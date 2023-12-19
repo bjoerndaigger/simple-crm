@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import Chart from 'chart.js/auto';
+import { Chart } from 'chart.js/auto';
+import { UserListService } from '../firebase-services/user-list.service';
 
 @Component({
   selector: 'app-chart-investments',
@@ -7,16 +8,27 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./chart-investments.component.scss']
 })
 export class ChartInvestmentsComponent implements OnInit {
-  constructor() { }
+  public chart: any;
+
+  constructor(public userListService: UserListService) { }
 
   ngOnInit(): void {
+    this.userListService.getUser();
+    this.getUsers();
     this.createChart();
   }
 
-  public chart: any;
+  getUsers() {
+    console.log('Function works');
+    const userData = this.userListService.allUsers;
+    console.log(userData);
+    
+  }
 
-  createChart(){
   
+
+  createChart() {
+
     this.chart = new Chart("MyChart", {
       type: 'pie',
       data: {
@@ -34,7 +46,7 @@ export class ChartInvestmentsComponent implements OnInit {
           }
         }
       }
-      
+
     });
   }
 }

@@ -13,25 +13,28 @@ export class UserListService {
   firestore: Firestore = inject(Firestore);
 
   constructor() {
+    this.getUser();
     this.unsubChanges = this.getUser();
-   }
+  }
 
   getUser() {
-    return onSnapshot(collection(this.firestore, 'users'), (list) => {
+    this.unsubChanges = onSnapshot(this.userCollection(), (list) => {
       this.allUsers = []; // clears list before rendering again
       list.forEach((element) => {
-        const userDataWithId = { // builds new object of both values
-          id: element.id,
-          ...element.data()
-        };
-        this.allUsers.push(userDataWithId);
+        let userData = element.data();
+        userData['id'] = element.id;
+        this.allUsers.push(userData);
       });
-      this.sortUsersByLastName();
+      // this.sortUsersByLastName();
     });
   }
 
   ngOnDestroy() {
-      this.unsubChanges();
+    this.unsubChanges();
+  }
+
+  userCollection() {
+    return collection(this.firestore, 'users');
   }
 
   sortUsersByLastName() {
