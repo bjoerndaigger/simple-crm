@@ -9,33 +9,35 @@ import { User } from 'src/models/user.class';
 export class UserListService {
   user = new User();
   allUsers = [];
-  unsubChanges;
+  unsubList;
 
   firestore: Firestore = inject(Firestore);
-  usersChange$ = new Subject(); // new observable
+  userList$ = new Subject<User[]>(); // subscribable observable from type subject with data from type user
 
   constructor() {
-    this.unsubChanges = this.getUserData();
+    this.unsubList = this.userList();
   }
 
-  getUserData() {
-    this.unsubChanges = onSnapshot(this.userCollection(), (list) => {
+  userList() {
+    this.unsubList = onSnapshot(this.getUserRef(), (list) => {
       this.allUsers = []; // clears list before rendering again
       list.forEach((element) => {
         let userData = element.data();
         userData['id'] = element.id;
         this.allUsers.push(userData);
       });
-      this.usersChange$.next(this.allUsers); // pass allUsers as an argument to my observable
+      this.userList$.next(this.allUsers); // pass allUsers as an argument to my observers with the next method
       this.sortUsersByLastName();
     });
   }
 
   ngOnDestroy() {
-    this.unsubChanges();
+    if (this.unsubList) {
+      this.unsubList.unsubscribe();
+    }
   }
 
-  userCollection() {
+  getUserRef() {
     return collection(this.firestore, 'users');
   }
 

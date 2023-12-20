@@ -9,31 +9,46 @@ import { UserListService } from '../firebase-services/user-list.service';
 })
 export class ChartInvestmentsComponent implements OnInit {
   public chart: any;
+  userListSubscription;
+  investmentData = [];
+  fullName = [];
 
   constructor(public userListService: UserListService) { }
 
   ngOnInit(): void {
-    this.userListService.usersChange$.subscribe(users => {  // subscribe to the observable in user list service, automatic call on changes
-      this.getUsers();
-    })
+    this.userListSubscription = this.userListService.userList$.subscribe(list => { // subscribe to the observable in user list service, automatic call on changes
+      this.getInvestmentData(list);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.userListSubscription) {
+      this.userListSubscription.unsubscribe();
+    }
+  }
+
+  getInvestmentData(list) {
+    list.sort((a, b) => b.investment - a.investment); // sort users by investment in descending order
+    const topInvestors = list.slice(0, 5); // show only the first five users
+  
+    topInvestors.forEach(user => {
+      this.investmentData.push(user.investment);
+      this.fullName.push(`${user.firstName} ${user.lastName}`);
+    });
+  
     this.createChart();
   }
-
-  getUsers() {
-    const userData = this.userListService.allUsers;
-    console.log(userData);
-    
-  }
+  
 
   createChart() {
-
+    const name = 
     this.chart = new Chart("MyChart", {
       type: 'pie',
       data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        labels: this.fullName,
         datasets: [{
           label: '$',
-          data: [12, 19, 3, 5, 2, 3],
+          data: this.investmentData,
           borderWidth: 1
         }]
       },
@@ -43,6 +58,7 @@ export class ChartInvestmentsComponent implements OnInit {
             beginAtZero: true
           }
         }
+        
       }
 
     });
