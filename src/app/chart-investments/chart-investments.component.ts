@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { UserListService } from '../firebase-services/user-list.service';
 
@@ -7,11 +7,19 @@ import { UserListService } from '../firebase-services/user-list.service';
   templateUrl: './chart-investments.component.html',
   styleUrls: ['./chart-investments.component.scss']
 })
-export class ChartInvestmentsComponent implements OnInit {
+export class ChartInvestmentsComponent implements OnInit, OnDestroy {
   public chart: any;
   userListSubscription;
   investmentData = [];
   fullName = [];
+  chartColors = [
+    'rgba(255, 99, 132, 0.8)',
+    'rgba(54, 162, 235, 0.8)',
+    'rgba(255, 206, 86, 0.8)',
+    'rgba(75, 192, 192, 0.8)',
+    'rgba(153, 102, 255, 0.8)',
+    'rgba(255, 159, 64, 0.8)',
+  ];
 
   constructor(public userListService: UserListService) { }
 
@@ -28,20 +36,22 @@ export class ChartInvestmentsComponent implements OnInit {
   }
 
   getInvestmentData(list) {
+    this.investmentData = [];
+    this.fullName = [];
+
     list.sort((a, b) => b.investment - a.investment); // sort users by investment in descending order
     const topInvestors = list.slice(0, 5); // show only the first five users
-  
+
     topInvestors.forEach(user => {
       this.investmentData.push(user.investment);
       this.fullName.push(`${user.firstName} ${user.lastName}`);
     });
-  
+
     this.createChart();
   }
-  
+
 
   createChart() {
-    const name = 
     this.chart = new Chart("MyChart", {
       type: 'pie',
       data: {
@@ -49,7 +59,8 @@ export class ChartInvestmentsComponent implements OnInit {
         datasets: [{
           label: '$',
           data: this.investmentData,
-          borderWidth: 1
+          borderWidth: 1,
+          backgroundColor: this.chartColors,
         }]
       },
       options: {
@@ -58,9 +69,7 @@ export class ChartInvestmentsComponent implements OnInit {
             beginAtZero: true
           }
         }
-        
       }
-
     });
   }
 }

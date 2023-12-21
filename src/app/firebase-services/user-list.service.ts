@@ -1,25 +1,25 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, OnDestroy } from '@angular/core';
 import { Firestore, onSnapshot, collection } from '@angular/fire/firestore';
-import { Subject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 import { User } from 'src/models/user.class';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserListService {
+export class UserListService implements OnDestroy {
   user = new User();
   allUsers = [];
   unsubList;
 
   firestore: Firestore = inject(Firestore);
-  userList$ = new Subject<User[]>(); // subscribable observable from type subject with data from type user
+  userList$ = new ReplaySubject(1); // subscribable observable from type replaysubject, 1 (buffer) saves the last value
 
   constructor() {
     this.unsubList = this.userList();
   }
 
   userList() {
-    this.unsubList = onSnapshot(this.getUserRef(), (list) => {
+    return onSnapshot(this.getUserRef(), (list) => {
       this.allUsers = []; // clears list before rendering again
       list.forEach((element) => {
         let userData = element.data();
