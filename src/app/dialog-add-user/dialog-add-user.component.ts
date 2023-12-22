@@ -1,7 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { User } from 'src/models/user.class';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { UserListService } from '../firebase-services/user-list.service';
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -9,30 +8,28 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./dialog-add-user.component.scss'],
 })
 export class DialogAddUserComponent {
-  firestore: Firestore = inject(Firestore);
-  user = new User();
-  birthDate: Date = new Date();
-  loading: boolean = false;
   minDate: Date;
   maxDate: Date;
 
-  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>) {
+  constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>, public userListService: UserListService) {
+    
+    this.defaultSettingsDatePicker();
+  } 
+
+  addUser() {
+    this.userListService.addUser();
+    this.dialogRef.close();
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  defaultSettingsDatePicker() { // allow only birthdate over 18
     const currentYear = new Date().getFullYear();
     this.minDate = new Date(currentYear - 100, 0, 1);
     const today = new Date();
-    this.maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());    
-  } 
-
-  async saveUser() {
-    this.user.birthDate = this.birthDate.getTime();
-    console.log('Current user is ', this.user);
-    this.loading = true;
-    await addDoc(collection(this.firestore, 'users'), this.user.toJSON()).then(
-      (result: any) => {
-        this.loading = false;
-        console.log('Adding user finished ', result);
-        this.dialogRef.close();
-      }
-    );
+    this.maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());  
+    this.userListService.birthDate = new Date(this.maxDate);  
   }
 }
