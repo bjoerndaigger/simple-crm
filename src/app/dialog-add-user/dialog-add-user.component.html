@@ -27,7 +27,7 @@
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Birth date</mat-label>
             <input [disabled]="this.userListService.loading" [(ngModel)]="this.userListService.birthDate" matInput placeholder="Birth date" matInput
-                [min]="minDate" [max]="maxDate" [matDatepicker]="picker1">
+                [min]="this.userListService.minDate" [max]="this.userListService.maxDate" [matDatepicker]="picker1">
                 <mat-hint>Must be at least 18 years old</mat-hint>
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1 startView="multi-year"></mat-datepicker>

@@ -1,5 +1,5 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
-import { Firestore, onSnapshot, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, onSnapshot, collection, addDoc, doc, updateDoc } from '@angular/fire/firestore';
 import { ReplaySubject } from 'rxjs';
 import { User } from 'src/models/user.class';
 
@@ -9,20 +9,24 @@ import { User } from 'src/models/user.class';
 export class UserListService implements OnDestroy {
   user = new User();
   allUsers = [];
-  unsubList;
-  birthDate: Date = new Date();
+  unsubList: any;
+  unsubSingleUser: any;
   loading: boolean = false;
+  userId: string;
+  birthDate: Date;
+  minDate: Date;
+  maxDate: Date;
 
   firestore: Firestore = inject(Firestore);
   userList$ = new ReplaySubject(1); // subscribable observable from type replaysubject, 1 (buffer) saves the last value
 
   constructor() {
-    this.unsubList = this.userList();
+    this.userList();
   }
 
   // get data from firebase
   userList() {
-    return onSnapshot(this.getUserRef(), (list) => {
+    return this.unsubList = onSnapshot(this.getUserRef(), (list) => {
       this.allUsers = []; // clears list before rendering again
       list.forEach((element) => {
         let userData = element.data();
@@ -38,27 +42,60 @@ export class UserListService implements OnDestroy {
     this.allUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 
-  ngOnDestroy() {
-    if (this.unsubList) {
-      this.unsubList.unsubscribe();
+  // dialog add user
+  async addUser() {
+    try {
+      this.loading = true;
+      this.user.birthDate = this.birthDate.getTime();
+      await addDoc(this.getUserRef(), this.user.toJSON());
+      console.log('User data updated successfully');
+    } catch (error) {
+      console.error('Error adding user data:', error);
+    } finally {
+      this.loading = false;
     }
   }
 
-  // dialog add user
-  async addUser() {
-    this.user.birthDate = this.birthDate.getTime();
-    console.log('Current user is ', this.user);
-    this.loading = true;
-    await addDoc(this.getUserRef(), this.user.toJSON()).then(
-      (result: any) => {
-        this.loading = false;
-        console.log('Adding user finished ', result);
-      }
-    );
+  // dialog edit user
+  async editUser() {
+    try {
+      this.loading = true;
+      this.user.birthDate = this.birthDate.getTime();
+      const userDoc = doc(this.firestore, 'users', this.userId);
+      await updateDoc(userDoc, this.user.toJSON());
+      console.log('User data updated successfully');
+    } catch (error) {
+      console.error('Error updating user data:', error);
+    } finally {
+      this.loading = false;
+    }
+  }
+
+  // user detail component
+  getSingleUser(userId: string) {
+    this.unsubSingleUser = onSnapshot(doc(this.firestore, 'users', userId), (userDoc) => {
+      this.user = new User(userDoc.data());
+    });
   }
 
   getUserRef() {
     return collection(this.firestore, 'users');
+  }
+
+  defaultSettingsDatePicker() { // allow only birthdate over 18
+    const currentYear = new Date().getFullYear();
+    this.minDate = new Date(currentYear - 100, 0, 1);
+    const today = new Date();
+    this.maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+  }
+
+  ngOnDestroy() {
+    if (this.unsubList) {
+      this.unsubList();
+    }
+    if (this.unsubSingleUser) {
+      this.unsubSingleUser();
+    }
   }
 }
 

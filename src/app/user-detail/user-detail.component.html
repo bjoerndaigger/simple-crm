@@ -8,28 +8,18 @@
         </mat-menu>
         <img src="./assets/img/profile.png">
         <div class="user-details">
-            <div><h2>{{ user.firstName }} {{ user.lastName }}</h2></div>
-            <div><b>Email:</b> {{ user.email }}</div>
-            <div><b>Investment:</b> {{ user.investment }} $</div>
-            <div><b>Birth date:</b> {{ user.birthDate | date:'dd/MM/yyyy' }}</div>
+            <div>
+                <h2>{{ this.userListService.user.firstName }} {{ this.userListService.user.lastName }}</h2>
+            </div>
+            <div><b>Email:</b> {{ this.userListService.user.email }}</div>
+            <div><b>Investment:</b> {{ this.userListService.user.investment }} $</div>
+            <div><b>Birth date:</b> {{ this.userListService.user.birthDate | date:'dd/MM/yyyy' }}</div>
         </div>
     </mat-card-content>
-</mat-card>
-<mat-card class="mt-32">
-    <mat-card-header>
-        <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="addressMenu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #addressMenu="matMenu">
-            <button mat-menu-item (click)="editAddress()" >Edit</button>
-        </mat-menu>
-        <mat-card-title>Address</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        {{ user.street }}<br>
-        {{ user.zipCode }} {{ user.city }}<br>
-        {{ user.country }}
+    <mat-card-content class="user-address">
+        <h3>Address</h3>
+            {{ this.userListService.user.street }}<br>
+            {{ this.userListService.user.city }}, {{ this.userListService.user.zipCode }}<br>
+            {{ this.userListService.user.country }}
     </mat-card-content>
 </mat-card>
-
-

@@ -4,6 +4,7 @@
   color: white;
   display: flex;
   align-items: flex-end;
+  padding-bottom: 1rem;
 
   img {
     height: 100px;
@@ -23,6 +24,13 @@
   height: 100px;
 
   h2 {
+    margin-bottom: 0;
+  }
+}
+
+.user-address {
+  padding-top: 1rem;
+  h3 {
     margin-bottom: 0;
   }
 }
