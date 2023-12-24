@@ -29,11 +29,10 @@
     <div>
         <mat-form-field appearance="outline" class="full-width">
             <mat-label>Birth date</mat-label>
-            <input [disabled]="this.userListService.loading" [(ngModel)]="this.userListService.birthDate" matInput placeholder="Birth date" matInput
+            <input [disabled]="this.userListService.loading" [(ngModel)]="this.userListService.birthDate" matInput placeholder="Birth date"
                 [min]="this.userListService.minDate" [max]="this.userListService.maxDate" [matDatepicker]="picker1">
             <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
-
         </mat-form-field>
     </div>
     <div>

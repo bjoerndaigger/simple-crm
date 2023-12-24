@@ -13,7 +13,7 @@ export class UserListService implements OnDestroy {
   unsubSingleUser: any;
   loading: boolean = false;
   userId: string;
-  birthDate: Date;
+  birthDate: Date = new Date();
   minDate: Date;
   maxDate: Date;
 
@@ -83,10 +83,11 @@ export class UserListService implements OnDestroy {
   }
 
   defaultSettingsDatePicker() { // allow only birthdate over 18
-    const currentYear = new Date().getFullYear();
-    this.minDate = new Date(currentYear - 100, 0, 1);
     const today = new Date();
-    this.maxDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+    this.minDate = new Date(today.getFullYear() - 100, 0, 1);
+    this.maxDate = eighteenYearsAgo;
+    this.birthDate = eighteenYearsAgo;
   }
 
   ngOnDestroy() {
