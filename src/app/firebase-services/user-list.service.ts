@@ -1,11 +1,13 @@
 import { Injectable, inject, OnDestroy } from '@angular/core';
-import { Firestore, onSnapshot, collection, addDoc, doc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, onSnapshot, collection, addDoc, doc, updateDoc, deleteDoc } from '@angular/fire/firestore';
 import { ReplaySubject } from 'rxjs';
 import { User } from 'src/models/user.class';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserListService implements OnDestroy {
   user = new User();
   allUsers = [];
@@ -20,7 +22,7 @@ export class UserListService implements OnDestroy {
   firestore: Firestore = inject(Firestore);
   userList$ = new ReplaySubject(1); // subscribable observable from type replaysubject, 1 (buffer) saves the last value
 
-  constructor() {
+  constructor(private router: Router) {
     this.userList();
   }
 
@@ -61,13 +63,25 @@ export class UserListService implements OnDestroy {
     try {
       this.loading = true;
       this.user.birthDate = this.birthDate.getTime();
-      const userDoc = doc(this.firestore, 'users', this.userId);
-      await updateDoc(userDoc, this.user.toJSON());
+      await updateDoc(this.getSingleUserRef(), this.user.toJSON());
       console.log('User data updated successfully');
     } catch (error) {
       console.error('Error updating user data:', error);
     } finally {
       this.loading = false;
+    }
+  }
+
+  // delete user
+  async deleteUser(userId: string) {
+    try {
+      await deleteDoc(doc(this.firestore, 'users', userId));
+      console.log('User data deleted successfully');
+    } catch (error) {
+      console.error('Error delete user data:', error);
+    }
+    finally {
+      this.router.navigate(['user']);
     }
   }
 
@@ -80,6 +94,10 @@ export class UserListService implements OnDestroy {
 
   getUserRef() {
     return collection(this.firestore, 'users');
+  }
+
+  getSingleUserRef() {
+    return doc(this.firestore, 'users', this.userId);
   }
 
   defaultSettingsDatePicker() { // allow only birthdate over 18

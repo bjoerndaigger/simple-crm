@@ -30,6 +30,10 @@ export class UserDetailComponent {
     dialog.componentInstance.userListService.user = new User(this.userListService.user.toJSON());
     dialog.componentInstance.userListService.userId = this.userId;
   }
+
+  deleteUser() {
+    this.userListService.deleteUser(this.userId);
+  }
 }
 
 
