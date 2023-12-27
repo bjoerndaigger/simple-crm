@@ -25,6 +25,10 @@ import { UserDetailComponent } from './user-detail/user-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
 import { ChartInvestmentsComponent } from './chart-investments/chart-investments.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
+import { ChartInvestorsByCountryComponent } from './chart-investors-by-country/chart-investors-by-country.component';
+import { ChartInvestorsByAgeComponent } from './chart-investors-by-age/chart-investors-by-age.component';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +38,10 @@ import { ChartInvestmentsComponent } from './chart-investments/chart-investments
     DialogAddUserComponent,
     UserDetailComponent,
     DialogEditUserComponent,
-    ChartInvestmentsComponent
+    ChartInvestmentsComponent,
+    LegalNoticeComponent,
+    ChartInvestorsByCountryComponent,
+    ChartInvestorsByAgeComponent
   ],
   imports: [
     BrowserModule,

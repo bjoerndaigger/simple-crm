@@ -1,0 +1,39 @@
+.row-1 {
+    display: flex;
+
+    mat-card {
+        flex: 1;
+        width: 50%;
+    }
+
+    mat-card-content {
+        font-size: 1.1rem;
+        text-align: center;
+    }
+}
+
+.row-2 {
+    margin-top: 16px;
+}
+
+.row-3 {
+    display: flex;
+    margin-top: 16px;
+
+    mat-card {
+        flex: 1;
+        width: 50%;
+    }
+}
+
+.column-left {
+    margin-right: 8px;
+}
+
+.column-right {
+    margin-left: 8px;
+}
+
+.total-investments {
+    color: green;
+}

@@ -1,1 +1,46 @@
-<app-chart-investments></app-chart-investments>
+<div class="row-1">
+  <mat-card class="column-left">
+    <mat-card-header>
+      <mat-card-title>Total Investors</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      {{ totalInvestors }}
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="column-right">
+    <mat-card-header>
+      <mat-card-title>Total Investments</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="total-investments">
+      $ {{ totalInvestments }}
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="row-2">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Top 5 Investors</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-chart-investments></app-chart-investments>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="row-3">
+  <mat-card class="column-left">
+    <mat-card-header>
+      <mat-card-title>Investors By Age</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-chart-investors-by-age></app-chart-investors-by-age>
+    </mat-card-content>
+  </mat-card>
+  <mat-card class="column-right">
+    <mat-card-header>
+      <mat-card-title>Investors Ba Country</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <app-chart-investors-by-country></app-chart-investors-by-country>
+    </mat-card-content>
+  </mat-card>
+</div>

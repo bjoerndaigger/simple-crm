@@ -36,9 +36,6 @@ export class ChartInvestmentsComponent implements OnInit, OnDestroy {
   }
 
   getInvestmentData(list) {
-    this.investmentData = [];
-    this.fullName = [];
-
     list.sort((a, b) => b.investment - a.investment); // sort users by investment in descending order
     const topInvestors = list.slice(0, 5); // show only the first five users
 
@@ -64,11 +61,7 @@ export class ChartInvestmentsComponent implements OnInit, OnDestroy {
         }]
       },
       options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
+        responsive: true
       }
     });
   }
