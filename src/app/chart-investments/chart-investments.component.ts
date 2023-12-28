@@ -49,7 +49,7 @@ export class ChartInvestmentsComponent implements OnInit, OnDestroy {
 
 
   createChart() {
-    this.chart = new Chart("MyChart", {
+    this.chart = new Chart("topInvestorsChart", {
       type: 'pie',
       data: {
         labels: this.fullName,
