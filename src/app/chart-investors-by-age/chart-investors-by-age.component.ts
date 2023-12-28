@@ -77,7 +77,7 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
       this.ageGroups['over 70']++;
     }
   }
-  
+
   createChart(ageGroups) {
     this.chart = new Chart("ageChart", {
       type: 'bar',
@@ -99,6 +99,7 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
         ]
       },
       options: {
+        responsive: true,
         aspectRatio: 2.5,
         plugins: {
           legend: {
