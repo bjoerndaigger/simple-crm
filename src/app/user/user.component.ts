@@ -11,12 +11,21 @@ import { UserListService } from '../firebase-services/user-list.service';
 })
 
 export class UserComponent implements OnInit {
+  mobile = false;
 
   constructor(public dialog: MatDialog, public userListService: UserListService) {
   }
 
   ngOnInit(): void {
     this.userListService.userList();
+    this.checkIfMobile();
+    window.addEventListener('resize', () => {
+      this.checkIfMobile(); 
+    });
+  }
+  
+  checkIfMobile() {
+    this.mobile = window.innerWidth <= 768; 
   }
 
   openDialog() {

@@ -41,25 +41,24 @@ export class ChartInvestorsByCountryComponent implements OnInit, OnDestroy {
       const countryName = user.country; // get countries
       const index = this.countryNames.indexOf(countryName); // search index of countries
   
-      if (index === -1) { // If country isn't in list, push name to Array
+      if (index === -1) { // if country isn't in list, push name to Array
         this.countryNames.push(countryName);
         this.countryCounter.push(1);  // add a counter for this country and set it to 1
       } else {
-        this.countryCounter[index]++; // If Country is in list, increase counter by 1
+        this.countryCounter[index]++; // if Country is in list, increase counter by 1
       }
     });
     
     this.createChart();
   }
   
-
   createChart() {
     this.chart = new Chart("countryChart", {
       type: 'pie',
       data: {
         labels: this.countryNames,
         datasets: [{
-          label: '$',
+          label: ' ',
           data: this.countryCounter,
           borderWidth: 1,
           backgroundColor: this.chartColors,

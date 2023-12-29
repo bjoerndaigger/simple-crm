@@ -1,12 +1,13 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
-  <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
+  <mat-drawer #drawer class="sidenav" [opened]="false" mode="side">
     <div class="logo-container">
       SIMPLE CRM
     </div>
+    <mat-icon class="close-icon" (click)="drawer.toggle()">arrow_back</mat-icon>
     <ul class="menu-items">
-      <li routerLink="/"><mat-icon>fact_check</mat-icon>Dashboard</li>
-      <li routerLink="/user"><mat-icon>perm_identity</mat-icon>Investors</li>
-      <li routerLink="/legal-notice"><mat-icon>policy</mat-icon>Legal Notice</li>
+      <li (click)="drawer.toggle()" routerLink="/"><mat-icon>fact_check</mat-icon>Dashboard</li>
+      <li (click)="drawer.toggle()" routerLink="/user"><mat-icon>perm_identity</mat-icon>Investors</li>
+      <li (click)="drawer.toggle()" routerLink="/legal-notice"><mat-icon>policy</mat-icon>Legal Notice</li>
     </ul>
   </mat-drawer>
 

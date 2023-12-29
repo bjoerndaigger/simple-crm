@@ -4,6 +4,14 @@
 
 .menu-icon {
     cursor: pointer;
+    margin-right: 16px;
+}
+
+.close-icon {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    cursor: pointer;
 }
 
 .sidenav {
@@ -52,6 +60,7 @@ mat-toolbar, mat-toolbar-row {
 }
 
 .router-container {
+    max-width: calc(1920px - 112px);
     padding-left: 56px;
     padding-right: 56px;
     padding-top: 16px;
@@ -64,3 +73,28 @@ mat-toolbar, mat-toolbar-row {
     display: flex;
     justify-content: center;
 }
+
+@media (max-width: 992px) {
+    .sidenav {
+      width: 100%;
+    }
+
+    .menu-items {
+        height: calc(100vh - 56px);
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .logo-container {
+        display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .router-container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+  }

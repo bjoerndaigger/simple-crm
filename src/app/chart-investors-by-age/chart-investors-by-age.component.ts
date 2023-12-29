@@ -85,7 +85,7 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
         labels: ['18 - 29', '30 - 39', '40-49', '50-59', '60-69', 'over 70'],
         datasets: [
           {
-            label: "",
+            label: ' ',
             data: [
               ageGroups['18-29'],
               ageGroups['30-39'],

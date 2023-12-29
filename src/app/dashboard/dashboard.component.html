@@ -1,5 +1,5 @@
 <div class="row-1">
-  <mat-card class="column-left">
+  <mat-card class="container-left">
     <mat-card-header>
       <mat-card-title>Total Investors</mat-card-title>
     </mat-card-header>
@@ -7,7 +7,7 @@
       {{ totalInvestors }}
     </mat-card-content>
   </mat-card>
-  <mat-card class="column-right">
+  <mat-card class="container-right">
     <mat-card-header>
       <mat-card-title>Total Investments</mat-card-title>
     </mat-card-header>
@@ -17,7 +17,7 @@
   </mat-card>
 </div>
 <div class="row-2">
-  <mat-card>
+  <mat-card class="container-left">
     <mat-card-header>
       <mat-card-title>Top 5 Investors</mat-card-title>
     </mat-card-header>
@@ -25,9 +25,7 @@
       <app-chart-investments></app-chart-investments>
     </mat-card-content>
   </mat-card>
-</div>
-<div class="row-3">
-  <mat-card class="column-left">
+  <mat-card class="container-middle">
     <mat-card-header>
       <mat-card-title>Investors By Age</mat-card-title>
     </mat-card-header>
@@ -35,7 +33,7 @@
       <app-chart-investors-by-age></app-chart-investors-by-age>
     </mat-card-content>
   </mat-card>
-  <mat-card class="column-right">
+  <mat-card class="container-right">
     <mat-card-header>
       <mat-card-title>Investors By Country</mat-card-title>
     </mat-card-header>

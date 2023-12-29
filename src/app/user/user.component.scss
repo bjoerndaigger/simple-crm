@@ -1,6 +1,7 @@
 mat-card-content {
   padding-left: 0;
   padding-right: 0;
+  
 
   &:last-child {
     padding-bottom: 0;
@@ -21,10 +22,11 @@ mat-card-content {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 
     &:first-child {
-        cursor: unset;
-        &:hover {
-            background-color: unset;
-        }
+      cursor: unset;
+
+      &:hover {
+        background-color: unset;
+      }
     }
 
     &:last-child {
@@ -48,7 +50,7 @@ mat-card-content {
     }
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.04);
+      background-color: rgba(0, 0, 0, 0.04);
     }
   }
 

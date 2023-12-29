@@ -3,36 +3,80 @@
 
     mat-card {
         flex: 1;
-        width: 50%;
     }
 
+    mat-card-header,
     mat-card-content {
-        font-size: 1.1rem;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+
+    .total-investments {
+        color: green;
     }
 }
+
 
 .row-2 {
-    margin-top: 16px;
-}
-.row-3 {
     display: flex;
     margin-top: 16px;
 
     mat-card {
         flex: 1;
-        width: 50%;
     }
 }
 
-.column-left {
+.container-left {
     margin-right: 8px;
 }
 
-.column-right {
+.container-middle {
+    margin: 0 8px;
+}
+
+.container-right {
     margin-left: 8px;
 }
 
-.total-investments {
-    color: green;
+@media (max-width: 992px) {
+    .row-2 {
+        flex-direction: column;
+
+        .container-left {
+            margin-right: 0;
+        }
+
+        .container-middle {
+            margin-top: 16px;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .container-right {
+            margin-top: 16px;
+            margin-left: 0;
+            margin-bottom: 16px;
+        }
+    }
+
+}
+
+
+@media (max-width: 600px) {
+    .row-1 {
+        flex-direction: column;
+
+        .container-left {
+            margin-right: 0;
+        }
+
+        .container-right {
+            margin-top: 16px;
+            margin-left: 0;
+        }
+
+        mat-card-header {
+            display: block;
+        }
+    }
 }

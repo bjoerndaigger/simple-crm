@@ -1,22 +1,21 @@
-<mat-card>
-    <mat-card-content>
-        <table class="user-table">
-            <tr>
-                <th>Name</th>
-                <th>E-Mail</th>
-                <th>Investment</th>
-            </tr>
-            <tr *ngFor="let user of userListService.allUsers" [routerLink]="['/user/' + user.id]">
-                <td>{{ user.lastName }}, {{ user.firstName }} </td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.investment }} $</td>
-            </tr>
-        </table>
-    </mat-card-content>
-</mat-card>
+ <mat-card>
+        <mat-card-content>
+            <table class="user-table">
+                <tr>
+                    <th>Name</th>
+                    <th *ngIf="!mobile">E-Mail</th>
+                    <th>Investment</th>
+                </tr>
+                <tr *ngFor="let user of userListService.allUsers" [routerLink]="['/user/' + user.id]">
+                    <td>{{ user.lastName }}, {{ user.firstName }} </td>
+                    <td *ngIf="!mobile">{{ user.email }}</td>
+                    <td>{{ user.investment }} $</td>
+                </tr>
+            </table>
+        </mat-card-content>
+    </mat-card>
 
-<button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" matTooltip="Add user"
-    matTooltipPosition="above">
-    <mat-icon>add</mat-icon>
-</button>
-
+    <button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" matTooltip="Add user"
+        matTooltipPosition="above">
+        <mat-icon>add</mat-icon>
+    </button>
