@@ -24,5 +24,6 @@ export class DialogAddUserComponent {
 
   closeDialog() {
     this.dialogRef.close();
+    this.userListService.clearUserData();
   }
 }

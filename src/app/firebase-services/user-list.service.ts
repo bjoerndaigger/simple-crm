@@ -50,11 +50,11 @@ export class UserListService implements OnDestroy {
       this.loading = true;
       this.user.birthDate = this.birthDate.getTime();
       await addDoc(this.getUserRef(), this.user.toJSON());
-      console.log('User data updated successfully');
     } catch (error) {
       console.error('Error adding user data:', error);
     } finally {
       this.loading = false;
+      this.clearUserData();
     }
   }
 
@@ -64,11 +64,12 @@ export class UserListService implements OnDestroy {
       this.loading = true;
       this.user.birthDate = this.birthDate.getTime();
       await updateDoc(this.getSingleUserRef(), this.user.toJSON());
-      console.log('User data updated successfully');
     } catch (error) {
       console.error('Error updating user data:', error);
     } finally {
       this.loading = false;
+      this.router.navigate(['user']);
+      this.clearUserData();
     }
   }
 
@@ -76,13 +77,19 @@ export class UserListService implements OnDestroy {
   async deleteUser(userId: string) {
     try {
       await deleteDoc(doc(this.firestore, 'users', userId));
-      console.log('User data deleted successfully');
     } catch (error) {
       console.error('Error delete user data:', error);
     }
     finally {
       this.router.navigate(['user']);
+      this.clearUserData();
     }
+  }
+
+  // clear input fields
+  clearUserData() {
+    this.user = new User(); 
+    this.birthDate = new Date(); 
   }
 
   // user detail component
