@@ -19,14 +19,19 @@ export class UserListService implements OnDestroy {
   minDate: Date;
   maxDate: Date;
 
-  firestore: Firestore = inject(Firestore);
-  userList$ = new ReplaySubject(1); // subscribable observable from type replaysubject, 1 (buffer) saves the last value
+  firestore: Firestore = inject(Firestore); // Instance of Firestore service
+  userList$ = new ReplaySubject(1); // // ReplaySubject observable for user list data (1 (buffer) saves the last value)
 
   constructor(private router: Router) {
     this.userList();
   }
 
-  // get data from firebase
+  /**
+   * Retrieves user data from Firebase Firestore.
+   * @returns {Function} Unsubscribe function for the snapshot listener.
+   * Update observers with the latest user list.
+   * Calls a function to sort the users by last name.
+   */
   userList() {
     return this.unsubList = onSnapshot(this.getUserRef(), (list) => {
       this.allUsers = []; // clears list before rendering again
@@ -40,11 +45,16 @@ export class UserListService implements OnDestroy {
     });
   }
 
+  /**
+   * Sorts the users by their last names.
+   */
   sortUsersByLastName() {
     this.allUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 
-  // dialog add user
+  /**
+   * Adds a new user to the Firestore database.
+   */
   async addUser() {
     try {
       this.loading = true;
@@ -58,7 +68,9 @@ export class UserListService implements OnDestroy {
     }
   }
 
-  // dialog edit user
+  /**
+   * Updates an existing user's data in the Firestore database.
+   */
   async editUser() {
     try {
       this.loading = true;
@@ -73,7 +85,10 @@ export class UserListService implements OnDestroy {
     }
   }
 
-  // delete user
+  /**
+   * Deletes a user from the Firestore database.
+   * @param {string} userId - ID of the user to delete
+   */
   async deleteUser(userId: string) {
     try {
       await deleteDoc(doc(this.firestore, 'users', userId));
@@ -86,27 +101,44 @@ export class UserListService implements OnDestroy {
     }
   }
 
-  // clear input fields
+  /**
+   * Clears the input fields for user data.
+   */
   clearUserData() {
-    this.user = new User(); 
-    this.birthDate = new Date(); 
+    this.user = new User();
+    this.birthDate = new Date();
   }
 
-  // user detail component
+  /**
+   * Retrieves a single user's details from Firestore.
+   * @param {string} userId - ID of the user
+   */
   getSingleUser(userId: string) {
     this.unsubSingleUser = onSnapshot(doc(this.firestore, 'users', userId), (userDoc) => {
       this.user = new User(userDoc.data());
     });
   }
 
+  /**
+   * Retrieves a single user's details from Firestore.
+   * @param {string} userId - ID of the user
+   */
   getUserRef() {
     return collection(this.firestore, 'users');
   }
 
+  /**
+   * Returns a reference to a single user in Firestore.
+   * @returns {DocumentReference} Reference to a single user
+   */
   getSingleUserRef() {
     return doc(this.firestore, 'users', this.userId);
   }
 
+  /**
+   * Sets default settings for the date picker.
+   * Allows only birthdates over 18 years ago.
+   */
   defaultSettingsDatePicker() { // allow only birthdate over 18
     const today = new Date();
     const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
@@ -115,6 +147,10 @@ export class UserListService implements OnDestroy {
     this.birthDate = eighteenYearsAgo;
   }
 
+  /**
+   * Lifecycle hook - performs cleanup when the component is destroyed.
+   * Unsubscribes from snapshot listeners.
+   */
   ngOnDestroy() {
     if (this.unsubList) {
       this.unsubList();

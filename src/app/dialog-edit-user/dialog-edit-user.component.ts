@@ -9,21 +9,36 @@ import { Router } from '@angular/router';
   templateUrl: './dialog-edit-user.component.html',
   styleUrls: ['./dialog-edit-user.component.scss']
 })
-export class DialogEditUserComponent {
 
+export class DialogEditUserComponent {
+  /**
+   * Creates an instance of DialogEditUserComponent.
+   * @param dialogRef - Reference to the MatDialogRef object.
+   * @param userListService - The service handling user list data.
+   * @param router - Angular router for navigation.
+   */
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>, public userListService: UserListService, private router: Router) {
     this.datePickerSettings();
   }
 
+  /**
+   * Saves the user's changes and closes the dialog.
+   */
   saveUser() {
     this.userListService.editUser();
     this.dialogRef.close();
   }
 
+  /**
+   * Configures date picker settings in user list service.
+   */
   datePickerSettings() {
     this.userListService.defaultSettingsDatePicker();
   }
 
+  /**
+   * Closes the dialog and navigates to the 'user' route while clearing user data.
+   */
   closeDialog() {
     this.dialogRef.close();
     this.router.navigate(['user']);

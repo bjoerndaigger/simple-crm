@@ -80,11 +80,10 @@ mat-toolbar, mat-toolbar-row {
     }
 
     .menu-items {
-        height: calc(100vh - 56px);
+        margin-top: 64px;
         display: flex;
         align-items: center;
         flex-direction: column;
-        justify-content: center;
     }
 
     .logo-container {

@@ -7,6 +7,7 @@ import { UserListService } from '../firebase-services/user-list.service';
   templateUrl: './chart-investors-by-age.component.html',
   styleUrls: ['./chart-investors-by-age.component.scss']
 })
+
 export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
   public chart: any;
   userListSubscription;
@@ -28,20 +29,35 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
     'rgba(255, 159, 64, 0.8)',
   ];
 
+  /**
+   * Creates an instance of ChartInvestorsByAgeComponent.
+   * @param userListService - The service handling user list data.
+   */
   constructor(public userListService: UserListService) { }
 
+  /** 
+   * Lifecycle hook called after component initialization. 
+   * Subscribes to the observable in user list service, which is automatically called on changes.
+   */
   ngOnInit(): void {
     this.userListSubscription = this.userListService.userList$.subscribe(list => {
       this.getInvestmentData(list);
     });
   }
 
+  /** 
+   * Lifecycle hook called before component destruction. 
+   */
   ngOnDestroy(): void {
     if (this.userListSubscription) {
       this.userListSubscription.unsubscribe();
     }
   }
 
+  /**
+   * Retrieves birthday data of investors from the provided list.
+   * @param list The list of users with birthday data.
+   */
   getInvestmentData(list) {
     list.forEach(user => {
       this.investorsBirthday.push(user.birthDate);
@@ -49,6 +65,10 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
     this.createChart(this.getAge());
   }
 
+  /**
+   * Calculates the age groups based on provided birthdates.
+   * @returns {Object} - An object containing age group data.
+   */
   getAge() {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -62,6 +82,10 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
     return this.ageGroups;
   }
 
+  /**
+   * Sorts the users into specific age groups.
+   * @param {number} age - The age to sort.
+   */
   calculateAge(age) {
     if (age >= 18 && age <= 29) {
       this.ageGroups['18-29']++;
@@ -78,6 +102,9 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** 
+   * Creates a chart using Chart.js library. 
+   */
   createChart(ageGroups) {
     this.chart = new Chart("ageChart", {
       type: 'bar',

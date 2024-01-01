@@ -11,11 +11,22 @@ import { UserListService } from '../firebase-services/user-list.service';
 })
 
 export class UserComponent implements OnInit {
-  mobile = false;
+  mobile = false;  // Hides email adresses in Mobile version when value is true.
 
+  /**
+   * Creates an instance of UserComponent.
+   * @param dialog - MatDialog for displaying dialogs.
+   * @param userListService - The service handling user list data.
+   */
   constructor(public dialog: MatDialog, public userListService: UserListService) {
   }
 
+  /**
+   * Lifecycle hook invoked after component initialization.
+   * Retrieves the user list.
+   * Checks if the view is on a mobile device,
+   * Sets up a listener for window resize events.
+   */
   ngOnInit(): void {
     this.userListService.userList();
     this.checkIfMobile();
@@ -23,11 +34,17 @@ export class UserComponent implements OnInit {
       this.checkIfMobile(); 
     });
   }
-  
+
+  /**
+   * Checks if the current viewport width indicates a mobile device and hides the email adresses in DOM.
+   */
   checkIfMobile() {
     this.mobile = window.innerWidth <= 768; 
   }
 
+  /**
+   * Opens the dialog for adding a new user.
+   */
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
   }
