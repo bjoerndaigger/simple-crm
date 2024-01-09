@@ -28,6 +28,8 @@ import { ChartInvestmentsComponent } from './chart-investments/chart-investments
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { ChartInvestorsByCountryComponent } from './chart-investors-by-country/chart-investors-by-country.component';
 import { ChartInvestorsByAgeComponent } from './chart-investors-by-age/chart-investors-by-age.component';
+import { StartPageComponent } from './start-page/start-page.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -41,7 +43,9 @@ import { ChartInvestorsByAgeComponent } from './chart-investors-by-age/chart-inv
     ChartInvestmentsComponent,
     LegalNoticeComponent,
     ChartInvestorsByCountryComponent,
-    ChartInvestorsByAgeComponent
+    ChartInvestorsByAgeComponent,
+    StartPageComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
