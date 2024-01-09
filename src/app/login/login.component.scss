@@ -1,0 +1,40 @@
+.form-container {
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 14px 3px rgba(0, 0, 0, 0.04);
+    border-radius: 30px;
+    width: 300px;
+    padding: 32px 48px;
+
+    h1 {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 24px;
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .input-field {
+        margin-bottom: 8px;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sign-up-button {
+        font-weight: 700;
+        color: #3F51B5;
+        cursor: pointer;
+    }
+}

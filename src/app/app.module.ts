@@ -30,6 +30,8 @@ import { ChartInvestorsByCountryComponent } from './chart-investors-by-country/c
 import { ChartInvestorsByAgeComponent } from './chart-investors-by-age/chart-investors-by-age.component';
 import { StartPageComponent } from './start-page/start-page.component';
 import { LoginComponent } from './login/login.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -45,7 +47,8 @@ import { LoginComponent } from './login/login.component';
     ChartInvestorsByCountryComponent,
     ChartInvestorsByAgeComponent,
     StartPageComponent,
-    LoginComponent
+    LoginComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +68,7 @@ import { LoginComponent } from './login/login.component';
     MatProgressBarModule,
     MatCardModule,
     MatMenuModule,
+    ReactiveFormsModule,
     provideFirebaseApp(() => initializeApp({"projectId":"simple-crm-daced","appId":"1:605265573908:web:b4dfb062f77bde47accf01","storageBucket":"simple-crm-daced.appspot.com","apiKey":"AIzaSyBWrxcYrJLzAroN1tDMVtbgom2KZSguygs","authDomain":"simple-crm-daced.firebaseapp.com","messagingSenderId":"605265573908"})),
     provideFirestore(() => getFirestore())
   ],
