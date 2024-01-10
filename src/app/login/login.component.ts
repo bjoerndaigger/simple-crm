@@ -8,9 +8,18 @@ import { FormControl, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   showSignUpForm: boolean = false;
-  
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('', [Validators.required]);
+
+  submit() {
+    if (this.emailFormControl.valid && this.passwordFormControl.valid) {
+      const email = this.emailFormControl.value;
+      const password = this.passwordFormControl.value;
+
+      console.log('E-Mail:', email);
+      console.log('Password:', password);
+    }
+  }
 
   openSignUpForm() {
     this.showSignUpForm = true;
