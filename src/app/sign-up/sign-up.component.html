@@ -4,16 +4,6 @@
     <div mat-dialog-content>
         <div class="input-container">
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Name</mat-label>
-                <input type="email" matInput [formControl]="nameFormControl" placeholder="Your name">
-                <mat-error *ngIf="nameFormControl.hasError('email') && !nameFormControl.hasError('required')">
-                    Please enter your name
-                </mat-error>
-                <mat-error *ngIf="nameFormControl.hasError('required')">
-                    Name is <strong>required</strong>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="input-field" appearance="outline">
                 <mat-label>Email</mat-label>
                 <input type="email" matInput [formControl]="emailFormControl" placeholder="yourmail@example.com">
                 <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -24,7 +14,7 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="input-field" appearance="outline">
-                <mat-label>Password</mat-label>
+                <mat-label>Password (at least 8 characters)</mat-label>
                 <input type="email" matInput [formControl]="passwordFormControl" placeholder="Your password">
                 <mat-error
                     *ngIf="passwordFormControl.hasError('password') && !passwordFormControl.hasError('required')">
@@ -44,6 +34,9 @@
                 <mat-error *ngIf="confirmPasswordFormControl.hasError('required')">
                     Password is <strong>required</strong>
                 </mat-error>
+                <mat-error *ngIf="confirmPasswordFormControl.hasError('passwordsNotMatch')">
+                    Passwords do not match
+                  </mat-error>
             </mat-form-field>
         </div>
         <div class="button-container">
