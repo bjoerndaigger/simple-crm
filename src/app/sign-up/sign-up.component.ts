@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../firebase-services/login.service';
-
-
 
 @Component({
   selector: 'app-sign-up',
@@ -10,35 +8,53 @@ import { LoginService } from '../firebase-services/login.service';
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
+  registrationSuccesful = false;
 
-  constructor(public loginService: LoginService) { }
+  constructor(private loginService: LoginService) { }
 
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^.{8,}$/)
-  ]);
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.pattern(/^.{8,}$/)
-  ]);
+  ngOnInit(): void {
+    this.loginService.registrationSuccessful$.subscribe(status => {
+      if (status === true) {
+        this.registrationSuccesful = true;
+      }
+    })
+  }
+
+  profileForm = new FormGroup({
+    emailFormControl: new FormControl('', [Validators.required, Validators.email]),
+    passwordFormControl: new FormControl('', [Validators.required, Validators.pattern(/^.{8,}$/), Validators.minLength(8)]),
+    confirmPasswordFormControl: new FormControl('', [Validators.required, Validators.pattern(/^.{8,}$/), Validators.minLength(8)])
+  }, { validators: this.passwordsMatchValidator });
+
+  passwordsMatchValidator(form: FormGroup) {
+    const password = form.get('passwordFormControl').value;
+    const confirmPassword = form.get('confirmPasswordFormControl').value;
+
+    if (password === confirmPassword) {
+      return null;
+    } else {
+      return { passwordsNotMatch: true };
+    }
+  }
 
   register() {
-    if (
-      this.emailFormControl.valid &&
-      this.passwordFormControl.valid &&
-      this.confirmPasswordFormControl.valid &&
-      this.passwordFormControl.value === this.confirmPasswordFormControl.value
-    ) {
-      const email = this.emailFormControl.value;
-      const password = this.passwordFormControl.value;
-      const confirmPassword = this.confirmPasswordFormControl.value;
-
-      console.log('E-Mail:', email);
-      console.log('Password:', password);
-      console.log('Confirm Password:', confirmPassword);
-
+    if (this.profileForm.hasError('passwordsNotMatch')) {
+      this.profileForm.get('confirmPasswordFormControl').setErrors({ passwordsNotMatch: true });
+    }
+    if (!this.profileForm.hasError('passwordsNotMatch') && this.profileForm.valid) {
+      const email = this.profileForm.get('emailFormControl').value;
+      const password = this.profileForm.get('passwordFormControl').value;
       this.loginService.registerUser(email, password);
+      this.profileForm.reset();
+    }
+  }
+
+  areAllInputFieldsFilled() {
+    if (this.profileForm.get('emailFormControl').value && this.profileForm.get('passwordFormControl').value && this.profileForm.get('confirmPasswordFormControl').value
+    ) {
+      return true;
+    } else {
+      return false;
     }
   }
 

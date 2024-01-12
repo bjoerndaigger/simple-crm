@@ -1,27 +1,36 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { LoginService } from '../firebase-services/login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  showSignUpForm: boolean = false;
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('', [Validators.required]);
+    showSignUpForm: boolean = false;
+    loginForm: FormGroup;
 
-  submit() {
-    if (this.emailFormControl.valid && this.passwordFormControl.valid) {
-      const email = this.emailFormControl.value;
-      const password = this.passwordFormControl.value;
-
-      console.log('E-Mail:', email);
-      console.log('Password:', password);
+    constructor(private fb: FormBuilder, private loginService: LoginService) {
+        this.loginForm = this.fb.group({
+            emailFormControl: ['', [Validators.required, Validators.email]],
+            passwordFormControl: ['', [Validators.required]]
+        });
     }
-  }
 
-  openSignUpForm() {
-    this.showSignUpForm = true;
-  }
+    submit() {
+        if (this.loginForm.valid) {
+            const email = this.loginForm.value.emailFormControl;
+            const password = this.loginForm.value.passwordFormControl;
+
+            console.log('E-Mail:', email);
+            console.log('Password:', password);
+
+            this.loginService.loginUser(email, password);
+        }
+    }
+
+    openSignUpForm() {
+        this.showSignUpForm = true;
+    }
 }
