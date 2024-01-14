@@ -10,9 +10,8 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'simple-crm';
 
-  constructor(private loginService: LoginService, public router: Router) { }
+  constructor(public loginService: LoginService, public router: Router) { }
 
-  
   logOut() {
     this.loginService.signOut();
     this.router.navigate(['/']);

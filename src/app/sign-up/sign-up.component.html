@@ -48,6 +48,9 @@
       <button [disabled]="!areAllInputFieldsFilled()" mat-raised-button color="primary" type="button"
         (click)="register()">Register</button>
     </div>
+    <mat-error *ngIf="!registrationSuccesful && loginService.errorEmailInUse" class="error-message">
+      {{ loginService.errorEmailInUse }}
+    </mat-error>
     <mat-error *ngIf="!registrationSuccesful && 
     (profileForm.get('emailFormControl').hasError('required') || 
      profileForm.get('passwordFormControl').hasError('required') || 

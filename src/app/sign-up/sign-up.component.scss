@@ -39,4 +39,14 @@
         color: #3F51B5;
         cursor: pointer;
     }
+
+    .error-message {
+        margin-bottom: 16px;
+    }
+}
+
+@media(max-width: 600px) {
+    .form-container {
+        width: auto;
+    }
 }

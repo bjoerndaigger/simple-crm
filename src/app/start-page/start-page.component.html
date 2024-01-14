@@ -1,3 +1,4 @@
 <div class="center-container">
-    <app-login></app-login>
-  </div>
+  <app-login *ngIf="!loginService.showSignUpForm"></app-login>
+  <app-sign-up *ngIf="loginService.showSignUpForm"></app-sign-up>
+</div>

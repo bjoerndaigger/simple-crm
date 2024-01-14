@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { UserListService } from '../firebase-services/user-list.service';
+import { LoginService } from '../firebase-services/login.service';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class UserComponent implements OnInit {
    * @param dialog - MatDialog for displaying dialogs.
    * @param userListService - The service handling user list data.
    */
-  constructor(public dialog: MatDialog, public userListService: UserListService) {
+  constructor(public dialog: MatDialog, public userListService: UserListService,  private loginService: LoginService) {
   }
 
   /**
@@ -29,6 +30,7 @@ export class UserComponent implements OnInit {
    */
   ngOnInit(): void {
     this.userListService.userList();
+    this.loginService.showActiveUser();
     this.checkIfMobile();
     window.addEventListener('resize', () => {
       this.checkIfMobile(); 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../firebase-services/login.service';
 
@@ -10,12 +10,13 @@ import { LoginService } from '../firebase-services/login.service';
 export class SignUpComponent {
   registrationSuccesful = false;
 
-  constructor(private loginService: LoginService) { }
+  constructor(public loginService: LoginService) { }
 
   ngOnInit(): void {
     this.loginService.registrationSuccessful$.subscribe(status => {
       if (status === true) {
         this.registrationSuccesful = true;
+        this.profileForm.reset();
       }
     })
   }
@@ -45,12 +46,13 @@ export class SignUpComponent {
       const email = this.profileForm.get('emailFormControl').value;
       const password = this.profileForm.get('passwordFormControl').value;
       this.loginService.registerUser(email, password);
-      this.profileForm.reset();
     }
   }
 
   areAllInputFieldsFilled() {
-    if (this.profileForm.get('emailFormControl').value && this.profileForm.get('passwordFormControl').value && this.profileForm.get('confirmPasswordFormControl').value
+    if (this.profileForm.get('emailFormControl').value &&
+      this.profileForm.get('passwordFormControl').value &&
+      this.profileForm.get('confirmPasswordFormControl').value
     ) {
       return true;
     } else {
@@ -59,6 +61,6 @@ export class SignUpComponent {
   }
 
   closeSignUpForm() {
-    location.reload();
+    this.loginService.showSignUpForm = false;
   }
 }

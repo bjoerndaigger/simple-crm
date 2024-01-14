@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class LoginService {
+  showMenu: boolean = false;
+  showSignUpForm: boolean = false;
+  activeUser: string | any;
+  errorMessage: string = '';
+  errorEmailInUse: string = '';
+  
   firestore: Firestore = inject(Firestore);
   registrationSuccessful$ = new Subject();
 
@@ -19,14 +25,13 @@ export class LoginService {
     const auth = getAuth();
 
     return createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log('Registration worked: ', user);
+      .then(() => {
         this.registrationSuccessful$.next(true);
+        this.errorEmailInUse = '';
       })
       .catch((error) => {
         if (error.code == 'auth/email-already-in-use') {
-          alert('The email address is already in use');
+          this.errorEmailInUse = 'The email address is already in use. Please select another one.';
         }
       });
   }
@@ -36,20 +41,33 @@ export class LoginService {
     return signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log('Login worked: ', user);
+        this.activeUser = user;
         this.router.navigate(['/dashboard']);
+        this.showMenu = true;
       })
-      .catch((error) => {
-          alert('Wrong email or password. Please try again.');
+      .catch(() => {
+        this.errorMessage = 'Wrong email or password. Please try again.';
       });
+  }
+
+  showActiveUser() {
+    const auth = getAuth();
+    return onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userMail = user.email;
+        this.activeUser = userMail;
+      }
+    });
   }
 
   signOut() {
     const auth = getAuth();
     signOut(auth).then(() => {
-      console.log('Successfully logged out');
+      this.activeUser = null;
+      this.showMenu = false;
+      this.errorMessage = '';
     }).catch((error) => {
-      console.log('Log out error');
+      console.log(error.code);
     });
   }
 }

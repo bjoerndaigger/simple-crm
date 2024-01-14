@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserListService } from '../firebase-services/user-list.service';
+import { LoginService } from '../firebase-services/login.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,16 +18,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Creates an instance of DashboardComponent.
    * @param userListService - The service handling user list data.
    */
-  constructor(public userListService: UserListService) { }
+  constructor(public userListService: UserListService, private loginService: LoginService) { }
+
 
   /** 
    * Lifecycle hook called after component initialization. 
    * Subscribes to the observable in user list service, which is automatically called on changes.
    */
   ngOnInit(): void {
-    this.userListSubscription = this.userListService.userList$.subscribe(list => { 
+    this.userListSubscription = this.userListService.userList$.subscribe(list => {
       this.getInvestmentData(list);
     });
+    this.loginService.showActiveUser();
   }
 
   /** 
