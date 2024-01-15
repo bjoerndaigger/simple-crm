@@ -24,7 +24,7 @@ export class ChartInvestmentsComponent implements OnInit, OnDestroy {
 
   /**
    * Creates an instance of ChartInvestmentsComponent.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
    */
   constructor(public userListService: UserListService) { }
 

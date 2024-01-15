@@ -31,7 +31,7 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
 
   /**
    * Creates an instance of ChartInvestorsByAgeComponent.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
    */
   constructor(public userListService: UserListService) { }
 

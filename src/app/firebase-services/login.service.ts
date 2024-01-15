@@ -17,10 +17,16 @@ export class LoginService {
   registrationSuccessful$ = new Subject();
   resetMailSent$ = new Subject();
 
-  firestore: Firestore = inject(Firestore);
+  firestore: Firestore = inject(Firestore); // Instance of Firestore service
   
   constructor(private router: Router) {}
 
+  /**
+   * Registers a new user with the provided email and password.
+   * @param {string} email - User's email address.
+   * @param {string} password - User's chosen password.
+   * @returns {Promise<void>} - Promise that resolves on successful registration.
+   */
   registerUser(email: string, password: string) {
     const auth = getAuth();
     return createUserWithEmailAndPassword(auth, email, password)
@@ -35,6 +41,12 @@ export class LoginService {
       });
   }
 
+  /**
+   * Logs in a user with the provided email and password.
+   * @param {string} email - User's email address.
+   * @param {string} password - User's password.
+   * @returns {Promise<void>} - Promise that resolves on successful login.
+   */
   loginUser(email: string, password: string) {
     const auth = getAuth();
     return signInWithEmailAndPassword(auth, email, password)
@@ -49,6 +61,11 @@ export class LoginService {
       });
   }
 
+  /**
+   * Initiates the process of resetting a user's password by sending a reset email.
+   * @param {string} email - User's email address.
+   * @returns {Promise<void>} - Promise that resolves on successfully sending the reset email.
+   */
   resetPassword(email) {
     const auth = getAuth();
     return sendPasswordResetEmail(auth, email)
@@ -60,6 +77,9 @@ export class LoginService {
       });
   }
   
+  /**
+   * Retrieves the currently active user and saves it in the activeUser variable.
+   */
   showActiveUser() {
     const auth = getAuth();
     return onAuthStateChanged(auth, (user) => {
@@ -70,6 +90,10 @@ export class LoginService {
     });
   }
 
+  /**
+   * Signs out the currently authenticated user.
+   * @returns A promise that resolves when the user is successfully signed out.
+   */
   signOut() {
     const auth = getAuth();
     signOut(auth).then(() => {

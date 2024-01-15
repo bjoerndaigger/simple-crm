@@ -16,7 +16,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   /**
    * Creates an instance of DashboardComponent.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
+   * @param loginService - The service handling login data.
    */
   constructor(public userListService: UserListService, private loginService: LoginService) { }
 
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   /** 
    * Lifecycle hook called after component initialization. 
    * Subscribes to the observable in user list service, which is automatically called on changes.
+   * Monitors which user is logged in.
    */
   ngOnInit(): void {
     this.userListSubscription = this.userListService.userList$.subscribe(list => {

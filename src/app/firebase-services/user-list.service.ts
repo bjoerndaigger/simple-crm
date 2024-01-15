@@ -27,10 +27,11 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Retrieves user data from Firebase Firestore.
-   * @returns {Function} Unsubscribe function for the snapshot listener.
+   * Retrieves customer data from Firebase Firestore.
+   * @returns {Function} - Unsubscribe function for the snapshot listener.
+   * @returns {Promise<void>} - Promise that resolves on successfully loaded the customers.
    * Update observers with the latest user list.
-   * Calls a function to sort the users by last name.
+   * Calls a function to sort the customers by last name.
    */
   userList() {
     return this.unsubList = onSnapshot(this.getUserRef(), (list) => {
@@ -46,14 +47,14 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Sorts the users by their last names.
+   * Sorts the customers by their last names.
    */
   sortUsersByLastName() {
     this.allUsers.sort((a, b) => a.lastName.localeCompare(b.lastName));
   }
 
   /**
-   * Adds a new user to the Firestore database.
+   * Adds a new customer to the Firestore database.
    */
   async addUser() {
     try {
@@ -69,7 +70,7 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Updates an existing user's data in the Firestore database.
+   * Updates an existing customer's data in the Firestore database.
    */
   async editUser() {
     try {
@@ -86,7 +87,7 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Deletes a user from the Firestore database.
+   * Deletes a customer from the Firestore database.
    * @param {string} userId - ID of the user to delete
    */
   async deleteUser(userId: string) {
@@ -110,8 +111,8 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Retrieves a single user's details from Firestore.
-   * @param {string} userId - ID of the user
+   * Retrieves a single customer's details from Firestore.
+   * @param {string} userId - ID of the customer
    */
   getSingleUser(userId: string) {
     this.unsubSingleUser = onSnapshot(doc(this.firestore, 'users', userId), (userDoc) => {
@@ -120,16 +121,16 @@ export class UserListService implements OnDestroy {
   }
 
   /**
-   * Retrieves a single user's details from Firestore.
-   * @param {string} userId - ID of the user
+   * Retrieves a single customer's details from Firestore.
+   * @param {string} userId - ID of the customer
    */
   getUserRef() {
     return collection(this.firestore, 'users');
   }
 
   /**
-   * Returns a reference to a single user in Firestore.
-   * @returns {DocumentReference} Reference to a single user
+   * Returns a reference to a single customer in Firestore.
+   * @returns {DocumentReference} Reference to a single customer user
    */
   getSingleUserRef() {
     return doc(this.firestore, 'users', this.userId);
@@ -139,7 +140,7 @@ export class UserListService implements OnDestroy {
    * Sets default settings for the date picker.
    * Allows only birthdates over 18 years ago.
    */
-  defaultSettingsDatePicker() { // allow only birthdate over 18
+  defaultSettingsDatePicker() { 
     const today = new Date();
     const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
     this.minDate = new Date(today.getFullYear() - 100, 0, 1);

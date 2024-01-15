@@ -12,7 +12,7 @@ export class DialogAddUserComponent {
   /**
    * Creates an instance of DialogAddUserComponent.
    * @param dialogRef - Reference to the MatDialogRef object.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
    */
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>, public userListService: UserListService) {
     this.datePickerSettings();
@@ -40,7 +40,7 @@ export class DialogAddUserComponent {
   }
 
   /**
-   * Adds a user and then closes the dialog.
+   * Adds a customer and then closes the dialog.
    */
   addUser() {
     this.userListService.addUser();

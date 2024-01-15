@@ -18,7 +18,7 @@ export class UserDetailComponent {
    * Creates an instance of UserDetailComponent.
    * @param route - The activated route for retrieving route information.
    * @param dialog - The dialog service for displaying dialogs.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
   */
   constructor(private route: ActivatedRoute, public dialog: MatDialog, public userListService: UserListService) { }
 
@@ -30,7 +30,7 @@ export class UserDetailComponent {
   }
 
   /**
-   * Extracts the User ID from the current Route and fetches the corresponding user details.
+   * Extracts the customer ID from the current Route and fetches the corresponding user details.
    */
   getUserId() {
     this.userId = this.route.snapshot.paramMap.get('id');
@@ -38,7 +38,7 @@ export class UserDetailComponent {
   }
 
   /** 
-   * Opens a dialog to edit user details 
+   * Opens a dialog to edit customer details 
    */
   editUser() {
     const dialog = this.dialog.open(DialogEditUserComponent);
@@ -47,7 +47,7 @@ export class UserDetailComponent {
   }
 
   /** 
-   * Deletes the user 
+   * Deletes the customer
    */
   deleteUser() {
     this.userListService.deleteUser(this.userId);

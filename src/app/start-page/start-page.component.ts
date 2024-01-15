@@ -8,5 +8,9 @@ import { LoginService } from '../firebase-services/login.service';
 })
 export class StartPageComponent {
 
+  /**
+   * Creates an instance of LegalNoticeComponent.
+   * @param loginService - The service handling login data.
+   */
   constructor(public loginService: LoginService) { }
 }

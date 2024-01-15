@@ -14,7 +14,7 @@ export class DialogEditUserComponent {
   /**
    * Creates an instance of DialogEditUserComponent.
    * @param dialogRef - Reference to the MatDialogRef object.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
    * @param router - Angular router for navigation.
    */
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>, public userListService: UserListService, private router: Router) {
@@ -22,7 +22,7 @@ export class DialogEditUserComponent {
   }
 
   /**
-   * Saves the user's changes and closes the dialog.
+   * Saves the customer's changes and closes the dialog.
    */
   saveUser() {
     this.userListService.editUser();
@@ -37,7 +37,7 @@ export class DialogEditUserComponent {
   }
 
   /**
-   * Closes the dialog and navigates to the 'user' route while clearing user data.
+   * Closes the dialog and navigates to the 'user' route while clearing customer data.
    */
   closeDialog() {
     this.dialogRef.close();

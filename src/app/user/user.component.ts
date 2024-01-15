@@ -17,14 +17,16 @@ export class UserComponent implements OnInit {
   /**
    * Creates an instance of UserComponent.
    * @param dialog - MatDialog for displaying dialogs.
-   * @param userListService - The service handling user list data.
+   * @param userListService - The service handling customer list data.
+   * @param loginService - The service handling login data.
    */
   constructor(public dialog: MatDialog, public userListService: UserListService,  private loginService: LoginService) {
   }
 
   /**
    * Lifecycle hook invoked after component initialization.
-   * Retrieves the user list.
+   * Retrieves the customer list.
+   * Monitors which user is logged in.
    * Checks if the view is on a mobile device,
    * Sets up a listener for window resize events.
    */
@@ -45,7 +47,7 @@ export class UserComponent implements OnInit {
   }
 
   /**
-   * Opens the dialog for adding a new user.
+   * Opens the dialog for adding a new customer.
    */
   openDialog() {
     this.dialog.open(DialogAddUserComponent);
