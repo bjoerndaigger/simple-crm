@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../firebase-services/login.service';
 import { Router } from '@angular/router';
 
@@ -9,19 +9,17 @@ import { Router } from '@angular/router';
     styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-    loginForm: FormGroup;
+    constructor(public loginService: LoginService, private router: Router) { }
 
-    constructor(private fb: FormBuilder, public loginService: LoginService, private router: Router) {
-        this.loginForm = this.fb.group({
-            emailFormControl: ['', [Validators.required, Validators.email]],
-            passwordFormControl: ['', [Validators.required]]
-        });
-    }
+    loginForm: FormGroup = new FormGroup({
+        email: new FormControl('', [Validators.required, Validators.email]),
+        password: new FormControl('', [Validators.required])
+    });
 
     submit() {
         if (this.loginForm.valid) {
-            const email = this.loginForm.value.emailFormControl;
-            const password = this.loginForm.value.passwordFormControl;
+            const email = this.loginForm.get('email').value;
+            const password = this.loginForm.get('password').value;
             this.loginService.loginUser(email, password);
         }
     }
@@ -30,8 +28,13 @@ export class LoginComponent {
         this.loginService.showSignUpForm = true;
     }
 
+    openPasswordReset() {
+        this.loginService.showPasswordReset = true;
+    }
+
     guestLogin() {
         this.router.navigate(['/dashboard']);
         this.loginService.showMenu = true;
     }
 }
+

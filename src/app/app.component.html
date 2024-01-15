@@ -10,7 +10,6 @@
       <li (click)="drawer.toggle()" routerLink="/legal-notice"><mat-icon>policy</mat-icon>Legal Notice</li>
     </ul>
   </mat-drawer>
-
   <div>
     <mat-toolbar color="primary">
       <mat-toolbar-row>
@@ -22,6 +21,9 @@
             <mat-menu #menu="matMenu">
               <button mat-menu-item (click)="logOut()">Sign Out</button>
             </mat-menu>
+          </div>
+          <div *ngIf="!loginService.activeUser">
+          <button mat-button (click)="showLogin()">Login</button>
           </div>
           <div *ngIf="loginService.activeUser" class="login-status-mobile">
             <button mat-button [matMenuTriggerFor]="menu" class="log-out-button"><mat-icon>logout</mat-icon></button>

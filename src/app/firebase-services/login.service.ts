@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "firebase/auth";
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -10,20 +10,19 @@ import { Router } from '@angular/router';
 export class LoginService {
   showMenu: boolean = false;
   showSignUpForm: boolean = false;
+  showPasswordReset: boolean = false;
   activeUser: string | any;
   errorMessage: string = '';
   errorEmailInUse: string = '';
-  
-  firestore: Firestore = inject(Firestore);
   registrationSuccessful$ = new Subject();
+  resetMailSent$ = new Subject();
 
-  constructor(private router: Router) {
-
-  }
+  firestore: Firestore = inject(Firestore);
+  
+  constructor(private router: Router) {}
 
   registerUser(email: string, password: string) {
     const auth = getAuth();
-
     return createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         this.registrationSuccessful$.next(true);
@@ -50,6 +49,17 @@ export class LoginService {
       });
   }
 
+  resetPassword(email) {
+    const auth = getAuth();
+    return sendPasswordResetEmail(auth, email)
+      .then(() => {
+        this.resetMailSent$.next(true);
+      })
+      .catch((error) => {
+        console.log(error.code);
+      });
+  }
+  
   showActiveUser() {
     const auth = getAuth();
     return onAuthStateChanged(auth, (user) => {

@@ -12,6 +12,12 @@ export class AppComponent {
 
   constructor(public loginService: LoginService, public router: Router) { }
 
+  showLogin() {
+    this.router.navigate(['/']);
+    this.loginService.showSignUpForm = false;
+    this.loginService.showPasswordReset = false;
+  }
+
   logOut() {
     this.loginService.signOut();
     this.router.navigate(['/']);
