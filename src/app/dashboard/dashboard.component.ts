@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { UserListService } from '../firebase-services/user-list.service';
+import { InvestorListService } from '../firebase-services/investor-list.service';
 import { LoginService } from '../firebase-services/login.service';
 
 @Component({
@@ -9,26 +9,26 @@ import { LoginService } from '../firebase-services/login.service';
 })
 
 export class DashboardComponent implements OnInit, OnDestroy {
-  userListSubscription;
+  investorListSubscription;
   totalInvestors;
   totalInvestments;
   investments = [];
 
   /**
    * Creates an instance of DashboardComponent.
-   * @param userListService - The service handling customer list data.
+   * @param investorListService - The service handling customer list data.
    * @param loginService - The service handling login data.
    */
-  constructor(public userListService: UserListService, private loginService: LoginService) { }
+  constructor(public investorListService: InvestorListService, private loginService: LoginService) { }
 
 
   /** 
    * Lifecycle hook called after component initialization. 
-   * Subscribes to the observable in user list service, which is automatically called on changes.
-   * Monitors which user is logged in.
+   * Subscribes to the observable in investor list service, which is automatically called on changes.
+   * Monitors which User is logged in.
    */
   ngOnInit(): void {
-    this.userListSubscription = this.userListService.userList$.subscribe(list => {
+    this.investorListSubscription = this.investorListService.investorList$.subscribe(list => {
       this.getInvestmentData(list);
     });
     this.loginService.showActiveUser();
@@ -38,19 +38,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Lifecycle hook called before component destruction. 
    */
   ngOnDestroy(): void {
-    if (this.userListSubscription) {
-      this.userListSubscription.unsubscribe();
+    if (this.investorListSubscription) {
+      this.investorListSubscription.unsubscribe();
     }
   }
 
   /**
-   * Retrieves investment data from the user list.
-   * @param list The list of users with investment data.
+   * Retrieves investment data from the investor list.
+   * @param list The list of investors with investment data.
    */
   getInvestmentData(list) {
     this.totalInvestors = list.length;
-    list.forEach(user => {
-      this.investments.push(Number(user.investment));
+    list.forEach(investor => {
+      this.investments.push(Number(investor.investment));
     });
     this.getInvestmentSum();
   }

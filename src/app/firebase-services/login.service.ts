@@ -86,6 +86,10 @@ export class LoginService {
       if (user) {
         const userMail = user.email;
         this.activeUser = userMail;
+        this.showMenu = true; 
+      } else {
+        this.activeUser = null;
+        this.showMenu = false; 
       }
     });
   }

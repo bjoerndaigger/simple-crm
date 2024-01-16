@@ -7,10 +7,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { UserComponent } from './user/user.component';
+import { InvestorComponent } from './investor/investor.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DialogAddUserComponent } from './dialog-add-user/dialog-add-user.component';
+import { DialogAddInvestorComponent } from './dialog-add-investor/dialog-add-investor.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -21,9 +21,9 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatCardModule } from '@angular/material/card';
-import { UserDetailComponent } from './user-detail/user-detail.component';
+import { InvestorDetailComponent } from './investor-detail/investor-detail.component';
 import { MatMenuModule } from '@angular/material/menu';
-import { DialogEditUserComponent } from './dialog-edit-user/dialog-edit-user.component';
+import { DialogEditInvestorComponent } from './dialog-edit-investor/dialog-edit-investor.component';
 import { ChartInvestmentsComponent } from './chart-investments/chart-investments.component';
 import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 import { ChartInvestorsByCountryComponent } from './chart-investors-by-country/chart-investors-by-country.component';
@@ -39,10 +39,10 @@ import { PasswordResetComponent } from './password-reset/password-reset.componen
   declarations: [
     AppComponent,
     DashboardComponent,
-    UserComponent,
-    DialogAddUserComponent,
-    UserDetailComponent,
-    DialogEditUserComponent,
+    InvestorComponent,
+    DialogAddInvestorComponent,
+    InvestorDetailComponent,
+    DialogEditInvestorComponent,
     ChartInvestmentsComponent,
     LegalNoticeComponent,
     ChartInvestorsByCountryComponent,

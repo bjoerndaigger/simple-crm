@@ -1,4 +1,4 @@
-export class User {
+export class Investor {
     firstName: string;
     lastName: string;
     email: string;
@@ -9,6 +9,10 @@ export class User {
     country: string;
     investment: number;
 
+    /**
+     * Creates a new Investor object.
+     * @param {Object} [obj] - An optional object containing initial values for the properties.
+     */
     constructor(obj?: any) {
         this.firstName = obj ? obj.firstName : '';
         this.lastName = obj ? obj.lastName : '';
@@ -21,6 +25,10 @@ export class User {
         this.investment = obj ? obj.investment : '';
     }
 
+    /**
+    * Converts the Investor object to a JSON representation.
+    * @returns {Object} - A JSON object representing the Investor.
+    */
     public toJSON() {
         return {
             firstName: this.firstName,

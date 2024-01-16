@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { UserListService } from '../firebase-services/user-list.service';
+import { InvestorListService } from '../firebase-services/investor-list.service';
 
 @Component({
   selector: 'app-chart-investors-by-age',
@@ -10,7 +10,7 @@ import { UserListService } from '../firebase-services/user-list.service';
 
 export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
   public chart: any;
-  userListSubscription;
+  investorListSubscription;
   investorsBirthday = [];
   ageGroups = {
     '18-29': 0,
@@ -31,16 +31,16 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
 
   /**
    * Creates an instance of ChartInvestorsByAgeComponent.
-   * @param userListService - The service handling customer list data.
+   * @param investorListService - The service handling customer list data.
    */
-  constructor(public userListService: UserListService) { }
+  constructor(public investorListService: InvestorListService) { }
 
   /** 
    * Lifecycle hook called after component initialization. 
-   * Subscribes to the observable in user list service, which is automatically called on changes.
+   * Subscribes to the observable in investor list service, which is automatically called on changes.
    */
   ngOnInit(): void {
-    this.userListSubscription = this.userListService.userList$.subscribe(list => {
+    this.investorListSubscription = this.investorListService.investorList$.subscribe(list => {
       this.getInvestmentData(list);
     });
   }
@@ -49,18 +49,18 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
    * Lifecycle hook called before component destruction. 
    */
   ngOnDestroy(): void {
-    if (this.userListSubscription) {
-      this.userListSubscription.unsubscribe();
+    if (this.investorListSubscription) {
+      this.investorListSubscription.unsubscribe();
     }
   }
 
   /**
    * Retrieves birthday data of investors from the provided list.
-   * @param list The list of users with birthday data.
+   * @param list The list of investors with birthday data.
    */
   getInvestmentData(list) {
-    list.forEach(user => {
-      this.investorsBirthday.push(user.birthDate);
+    list.forEach(investor => {
+      this.investorsBirthday.push(investor.birthDate);
     });
     this.createChart(this.getAge());
   }
@@ -83,7 +83,7 @@ export class ChartInvestorsByAgeComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Sorts the users into specific age groups.
+   * Sorts the investors into specific age groups.
    * @param {number} age - The age to sort.
    */
   calculateAge(age) {

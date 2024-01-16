@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
-import { UserListService } from '../firebase-services/user-list.service';
+import { DialogAddInvestorComponent } from '../dialog-add-investor/dialog-add-investor.component';
+import { InvestorListService } from '../firebase-services/investor-list.service';
 import { LoginService } from '../firebase-services/login.service';
 
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss'],
+  selector: 'app-investor',
+  templateUrl: './investor.component.html',
+  styleUrls: ['./investor.component.scss'],
 })
 
-export class UserComponent implements OnInit {
+export class InvestorComponent implements OnInit {
   mobile = false;  // Hides email adresses in Mobile version when value is true.
 
   /**
-   * Creates an instance of UserComponent.
+   * Creates an instance of InvestorComponent.
    * @param dialog - MatDialog for displaying dialogs.
-   * @param userListService - The service handling customer list data.
+   * @param investorListService - The service handling customer list data.
    * @param loginService - The service handling login data.
    */
-  constructor(public dialog: MatDialog, public userListService: UserListService,  private loginService: LoginService) {
+  constructor(public dialog: MatDialog, public investorListService: InvestorListService,  private loginService: LoginService) {
   }
 
   /**
@@ -31,7 +31,7 @@ export class UserComponent implements OnInit {
    * Sets up a listener for window resize events.
    */
   ngOnInit(): void {
-    this.userListService.userList();
+    this.investorListService.investorList();
     this.loginService.showActiveUser();
     this.checkIfMobile();
     window.addEventListener('resize', () => {
@@ -50,7 +50,7 @@ export class UserComponent implements OnInit {
    * Opens the dialog for adding a new customer.
    */
   openDialog() {
-    this.dialog.open(DialogAddUserComponent);
+    this.dialog.open(DialogAddInvestorComponent);
   }
 }
 

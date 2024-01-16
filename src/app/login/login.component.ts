@@ -41,6 +41,7 @@ export class LoginComponent {
      */
     openSignUpForm() {
         this.loginService.showSignUpForm = true;
+        this.loginService.errorMessage = '';
     }
 
     /**
@@ -48,14 +49,7 @@ export class LoginComponent {
      */
     openPasswordReset() {
         this.loginService.showPasswordReset = true;
-    }
-
-    /**
-     * Performs a guest login, navigates to the dashboard, and shows the menu.
-     */
-    guestLogin() {
-        this.router.navigate(['/dashboard']);
-        this.loginService.showMenu = true;
+        this.loginService.errorMessage = '';
     }
 }
 
