@@ -1,27 +1,30 @@
-<mat-card>
-    <mat-card-content class="investor-detail-header">
-        <mat-icon class="pin-left-upper-corner" routerLink="/investor">arrow_back</mat-icon>
-        <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="investorMenu">
-            <mat-icon>more_vert</mat-icon>
-        </button>
-        <mat-menu #investorMenu="matMenu">
-            <button mat-menu-item (click)="editInvestor()">Edit</button>
-            <button mat-menu-item (click)="deleteInvestor()">Delete</button>
-        </mat-menu>
-        <img src="./assets/img/profile.png">
-        <div class="investor-details">
-            <div>
-                <h2>{{ this.investorListService.investor.firstName }} {{ this.investorListService.investor.lastName }}</h2>
+<div class="investor-detail-container">
+    <mat-card>
+        <mat-card-content class="investor-detail-header">
+            <mat-icon class="pin-left-upper-corner" routerLink="/investor">arrow_back</mat-icon>
+            <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="investorMenu">
+                <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #investorMenu="matMenu">
+                <button mat-menu-item (click)="editInvestor()">Edit</button>
+                <button mat-menu-item (click)="deleteInvestor()">Delete</button>
+            </mat-menu>
+            <img src="./assets/img/profile.png">
+            <div class="investor-details">
+                <div>
+                    <h2>{{ this.investorListService.investor.firstName }} {{ this.investorListService.investor.lastName
+                        }}</h2>
+                </div>
+                <div><b>Email:</b> {{ this.investorListService.investor.email }}</div>
+                <div><b>Investment:</b> {{ this.investorListService.investor.investment }} $</div>
+                <div><b>Birth date:</b> {{ this.investorListService.investor.birthDate | date:'dd/MM/yyyy' }}</div>
             </div>
-            <div><b>Email:</b> {{ this.investorListService.investor.email }}</div>
-            <div><b>Investment:</b> {{ this.investorListService.investor.investment }} $</div>
-            <div><b>Birth date:</b> {{ this.investorListService.investor.birthDate | date:'dd/MM/yyyy' }}</div>
-        </div>
-    </mat-card-content>
-    <mat-card-content class="investor-address">
-        <h3>Address</h3>
+        </mat-card-content>
+        <mat-card-content class="investor-address">
+            <h3>Address</h3>
             {{ this.investorListService.investor.street }}<br>
             {{ this.investorListService.investor.city }}, {{ this.investorListService.investor.zipCode }}<br>
             {{ this.investorListService.investor.country }}
-    </mat-card-content>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
+</div>

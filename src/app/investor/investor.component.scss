@@ -1,7 +1,11 @@
+.investor-container {
+  max-width: calc(1920px - 112px);
+}
+
 mat-card-content {
   padding-left: 0;
   padding-right: 0;
-  
+
   &:last-child {
     padding-bottom: 0;
   }

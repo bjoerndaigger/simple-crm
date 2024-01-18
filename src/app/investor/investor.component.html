@@ -1,4 +1,5 @@
- <mat-card>
+<div class="investor-container">
+    <mat-card>
         <mat-card-content>
             <table class="investor-table">
                 <tr>
@@ -6,7 +7,8 @@
                     <th *ngIf="!mobile">E-Mail</th>
                     <th>Investment</th>
                 </tr>
-                <tr *ngFor="let investor of investorListService.allInvestors" [routerLink]="['/investor/' + investor.id]">
+                <tr *ngFor="let investor of investorListService.allInvestors"
+                    [routerLink]="['/investor/' + investor.id]">
                     <td>{{ investor.lastName }}, {{ investor.firstName }} </td>
                     <td *ngIf="!mobile">{{ investor.email }}</td>
                     <td>{{ investor.investment }} $</td>
@@ -18,3 +20,4 @@
         matTooltipPosition="above">
         <mat-icon>add</mat-icon>
     </button>
+</div>
