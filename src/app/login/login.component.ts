@@ -36,6 +36,10 @@ export class LoginComponent {
         }
     }
 
+    submitGuest() {
+        this.loginService.loginUser('guest@user.de', 'guestuser');
+    }
+
     /**
      * Opens the sign-up form.
      */

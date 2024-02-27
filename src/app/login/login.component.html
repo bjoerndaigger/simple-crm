@@ -24,6 +24,8 @@
         <div class="button-container">
             <button mat-raised-button color="primary" type="button" [disabled]="!loginForm.valid"
                 (click)="submit()">Login</button>
+                <button mat-raised-button color="basic" type="button"
+                (click)="submitGuest()">Guest</button>
         </div>
         <div class="footer-container">
             <mat-error *ngIf="loginService.errorMessage">
